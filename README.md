@@ -6,7 +6,7 @@ Cluster Reporting Tool is a python based tool for automatic generation of report
 
 ### Usage:
 
-TBD
+>>> python3 cluster_reporting_tool.py -c <contrast_input_brain_map.nii.gz> -t <threshold> -v <volume number>
 
 
 
