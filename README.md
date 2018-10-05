@@ -9,7 +9,7 @@ Cluster Reporting Tool is a python based tool for automatic generation of report
 
 ```>>> python3 cluster_reporting_tool.py -c <contrast_input_brain_map.nii.gz> -t <threshold> -v <volume number>```
 
-**Note**: Currently it thresholds similar to FSL. That is, it takes as input one threshold value and then clips the brain voxels with values lying in between -threshold and +threshold. Clusters are found with the remaining voxels. 
+**Note**: Currently it thresholds similar to FSL. That is, it takes as input one threshold value and then clips the brain voxels with values lying in between (-ve) threshold value and (+ve) threshold value. Clusters are found with the remaining voxels. 
 
 
 
