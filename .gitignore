@@ -102,3 +102,11 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# input fMRI volumes
+*.nii
+*.nii.gz
+
+# output CSV
+*.csv
+
