@@ -500,7 +500,7 @@ if __name__ == "__main__":
                     help="Threshold")
     ap.add_argument("-v", "--vol", required=False,
                     help="Volume Number (If a 4D contrast is used as input) \
-                    [Starts from 1]")
+                    [Starts from 0]")
 
 
     args = vars(ap.parse_args())
