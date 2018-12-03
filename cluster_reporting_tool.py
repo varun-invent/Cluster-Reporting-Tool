@@ -19,6 +19,7 @@ from utils import atlasUtility as au
 import argparse
 import pandas as pd
 from collections import OrderedDict
+import os
 
 class cluster_reporting_tool:
     """
@@ -135,7 +136,7 @@ class cluster_reporting_tool:
         # print("Center of Gravity:", MNI)
         return MNI
 
-    def report(self, volume = None, threshold = None):
+    def report(self, volume = None, threshold = None, out_file = 'ClusterReport.csv'):
         # To take care if user has given a 4D contrast
         if volume != None:
             self.volume = volume
@@ -169,6 +170,9 @@ class cluster_reporting_tool:
 
         # List to store cluster size information
         full_cluster_voxels_percentage_list = []
+
+        atlas_obj = au.queryAtlas(atlas_path, atlas_labels_path,
+                  atlas_xml_zero_start_index=atlas_xml_zero_start_index)
 
         for cluster_number in range(1,num_clusters + 1):
             # Coordinates that are present in cluster given by cluster_number
@@ -356,15 +360,14 @@ class cluster_reporting_tool:
                 atlas_xml_zero_start_index = \
                                    self.atlas_dict['atlas_xml_zero_start_index']
 
-                aal_atlas_obj = au.queryAtlas(atlas_path, atlas_labels_path,
-                          atlas_xml_zero_start_index=atlas_xml_zero_start_index)
+
 
 
                 # Names of the regions of COG
                 cog_region_name_weighted = \
-                              aal_atlas_obj.getAtlasRegions(MNI_cog_weighted)[1]
+                              atlas_obj.getAtlasRegions(MNI_cog_weighted)[1]
                 cog_region_name_unweighted = \
-                            aal_atlas_obj.getAtlasRegions(MNI_cog_unweighted)[1]
+                            atlas_obj.getAtlasRegions(MNI_cog_unweighted)[1]
 
                 print('Region name weighted COG: ',cog_region_name_weighted)
 
@@ -485,14 +488,15 @@ class cluster_reporting_tool:
 
                     # d. Number and Percentage of voxels overlapping the region
                     # e. Peak coordinate of the cluster
-        df_report.to_csv('ClusterReport.csv', index = False)
+        df_report.to_csv(out_file, index = False)
+        return os.path.abspath(out_file)
         # TODO Test the function
 
 
 if __name__ == "__main__":
     # construct the argument parser and parse the arguments
     ap = argparse.ArgumentParser()
-    ap.add_argument("-c", "--contrast", required=False,
+    ap.add_argument("-c", "--contrast", required=True,
                     help="Path to contrast file")
     ap.add_argument("-a", "--atlas", required=False,
                     help="Path to Atlas file")
@@ -545,6 +549,12 @@ if __name__ == "__main__":
         atlas_path = [base_path + 'aalAtlas/AAL.nii.gz']
         atlas_labels_path = [base_path + 'aalAtlas/AAL.xml']
         atlas_xml_zero_start_index  =  False
+    elif atlas == 'fb':
+        atlas_path = [base_path +
+        'Full_brain_atlas_thr0-2mm/fullbrain_atlas_thr0-2mm_resample.nii']
+        atlas_labels_path = [base_path +
+        'Full_brain_atlas_thr0-2mm/fullbrain_atlas.xml']
+        atlas_xml_zero_start_index  =  True
 
     atlas_dict = {
     'atlas_path': atlas_path,
