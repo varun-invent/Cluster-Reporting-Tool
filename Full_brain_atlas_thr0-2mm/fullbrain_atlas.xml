@@ -257,9 +257,9 @@
   <label index="244" x="38" y="55" z="38">lPFtha_L</label>
   <label index="245" x="51" y="58" z="39">lPFtha_R</label>
   <label index="246" x="96" y="81" z="55">Left I-IV</label>
-  <label index="245" x="84" y="80" z="56">Right I-IV</label>
+  <label index="247" x="84" y="80" z="56">Right I-IV</label>
   <label index="248" x="107" y="78" z="52">Left V</label>
-  <label index="259" x="73" y="77" z="52">Right V</label>
+  <label index="249" x="73" y="77" z="52">Right V</label>
   <label index="250" x="104" y="58" z="51">Left VI</label>
   <label index="251" x="90" y="53" z="51">Vermis VI</label>
   <label index="252" x="69" y="61" z="49">Right VI</label>
@@ -269,7 +269,7 @@
   <label index="256" x="102" y="45" z="33">Left Crus II</label>
   <label index="257" x="89" y="52" z="40">Vermis Crus II</label>
   <label index="258" x="70" y="46" z="31">Right Crus II</label>
-  <label index="269" x="128" y="68" z="18">Left VIIb</label>
+  <label index="259" x="128" y="68" z="18">Left VIIb</label>
   <label index="260" x="89" y="57" z="41">Vermis VIIb</label>
   <label index="261" x="60" y="56" z="19">Right VIIb</label>
   <label index="262" x="119" y="72" z="18">Left VIIIa</label>
@@ -279,7 +279,7 @@
   <label index="266" x="90" y="61" z="27">Vermis VIIIb</label>
   <label index="267" x="71" y="73" z="17">Right VIIIb</label>
   <label index="268" x="96" y="70" z="21">Left IX</label>
-  <label index="279" x="90" y="71" z="36">Vermis IX</label>
+  <label index="269" x="90" y="71" z="36">Vermis IX</label>
   <label index="270" x="84" y="71" z="20">Right IX</label>
   <label index="271" x="111" y="91" z="26">Left X</label>
   <label index="272" x="90" y="78" z="37">Vermis X</label>
