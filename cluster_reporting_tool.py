@@ -118,7 +118,9 @@ class cluster_reporting_tool:
         Internal Function to be used within this script
         Returns the pixel dimension
         """
-        if self.brain_img.header['pixdim'][1] == 2:
+        if self.brain_img.header['pixdim'][1] == 3:
+            pixdim = 3
+        elif self.brain_img.header['pixdim'][1] == 2:
             pixdim = 2
         elif self.brain_img.header['pixdim'][1] == 1:
             pixdim = 1
@@ -133,6 +135,8 @@ class cluster_reporting_tool:
             MNI = au.queryAtlas.XYZ2MNI1mm(list(CM))
         elif self._pixDim() == 2:
             MNI = au.queryAtlas.XYZ2MNI2mm(list(CM))
+        elif self._pixDim() == 3:
+            MNI = au.queryAtlas.XYZ2MNI3mm(list(CM))
         # print("Center of Gravity:", MNI)
         return MNI
 
@@ -170,6 +174,11 @@ class cluster_reporting_tool:
 
         # List to store cluster size information
         full_cluster_voxels_percentage_list = []
+
+        atlas_path = self.atlas_dict['atlas_path']
+        atlas_labels_path = self.atlas_dict['atlas_labels_path']
+        atlas_xml_zero_start_index = \
+                           self.atlas_dict['atlas_xml_zero_start_index']
 
         atlas_obj = au.queryAtlas(atlas_path, atlas_labels_path,
                   atlas_xml_zero_start_index=atlas_xml_zero_start_index)
@@ -355,13 +364,6 @@ class cluster_reporting_tool:
 
                 # c. Report the name of the region
 
-                atlas_path = self.atlas_dict['atlas_path']
-                atlas_labels_path = self.atlas_dict['atlas_labels_path']
-                atlas_xml_zero_start_index = \
-                                   self.atlas_dict['atlas_xml_zero_start_index']
-
-
-
 
                 # Names of the regions of COG
                 cog_region_name_weighted = \
@@ -489,9 +491,32 @@ class cluster_reporting_tool:
                     # d. Number and Percentage of voxels overlapping the region
                     # e. Peak coordinate of the cluster
         df_report.to_csv(out_file, index = False)
-        return os.path.abspath(out_file)
+        return os.path.abspath(out_file), df_report
         # TODO Test the function
 
+def report(contrast, atlas, threshold, volume=0):
+    base_path = os.path.abspath('../Cluster-Reporting-Tool-master') + '/'
+    if atlas == 'AAL':
+        atlas_path = [base_path + 'aalAtlas/AAL.nii.gz']
+        atlas_labels_path = [base_path + 'aalAtlas/AAL.xml']
+        atlas_xml_zero_start_index  =  False
+    elif atlas == 'fb':
+        atlas_path = [base_path +
+        'Full_brain_atlas_thr0-2mm/fullbrain_atlas_thr0-2mm_resample.nii']
+        atlas_labels_path = [base_path +
+        'Full_brain_atlas_thr0-2mm/fullbrain_atlas.xml']
+        atlas_xml_zero_start_index  =  True
+
+    atlas_dict = {
+    'atlas_path': atlas_path,
+    'atlas_labels_path': atlas_labels_path,
+    'atlas_xml_zero_start_index': atlas_xml_zero_start_index
+    }
+
+
+    crl_obj = cluster_reporting_tool(contrast, atlas_dict, threshold, volume)
+    return crl_obj
+    # crl_obj.report()
 
 if __name__ == "__main__":
     # construct the argument parser and parse the arguments
@@ -510,23 +535,17 @@ if __name__ == "__main__":
     args = vars(ap.parse_args())
 
 
-
-    base_path = '/home/varun/Projects/fmri/' + \
-    'Autism-survey-connectivity-links-analysis/'
+    base_path = os.path.abspath('../Cluster-Reporting-Tool-master') + '/' 
 
     if args["contrast"] != None:
         contrast = args["contrast"]
     else:
-        contrast = '/media/varun/LENOVO5/BackupDhyanam/fdr_and_results/' + \
-        'motionRegress1filt1global0smoothing1_eyes_closed/map_logp.nii.gz'
         contrast = 'map_logq_2mm.nii.gz'
     print('Using contrast %s' % contrast)
 
     if args["atlas"] != None:
         atlas = args["atlas"]
     else:
-        # atlas = '/home/varun/Projects/fmri/' + \
-        # 'Autism-survey-connectivity-links-analysis/aalAtlas/AAL.nii.gz'
         atlas = 'AAL'
     print("Using atlas %s" % atlas)
 
