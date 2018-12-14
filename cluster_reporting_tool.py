@@ -328,8 +328,8 @@ class cluster_reporting_tool:
                               tuple(self.getNearestVoxel(roi_mask_for_weighted_cog,
                                                    cog_weighted))
 
-                print('COM Unweighted', cog_unweighted)
-                print('COM Weighted', cog_weighted)
+                # print('COM Unweighted', cog_unweighted)
+                # print('COM Weighted', cog_weighted)
 
                 # Finding the values at the cluster representative coordinates
                 cog_unweighted_value = brain[cog_unweighted]
@@ -371,9 +371,9 @@ class cluster_reporting_tool:
                 cog_region_name_unweighted = \
                             atlas_obj.getAtlasRegions(MNI_cog_unweighted)[1]
 
-                print('Region name weighted COG: ',cog_region_name_weighted)
-
-                print('Region name unweighter COG: ',cog_region_name_unweighted)
+                # print('Region name weighted COG: ',cog_region_name_weighted)
+                #
+                # print('Region name unweighter COG: ',cog_region_name_unweighted)
 
                 # List created to be added to dataframe
                 cog_region_name_weighted_list.append(cog_region_name_weighted)
@@ -495,7 +495,7 @@ class cluster_reporting_tool:
         # TODO Test the function
 
 def report(contrast, atlas, threshold, volume=0):
-    base_path = os.path.abspath('../Cluster-Reporting-Tool-master') + '/'
+    base_path = os.path.abspath('../../Cluster-Reporting-Tool-master') + '/'
     if atlas == 'AAL':
         atlas_path = [base_path + 'aalAtlas/AAL.nii.gz']
         atlas_labels_path = [base_path + 'aalAtlas/AAL.xml']
@@ -535,7 +535,7 @@ if __name__ == "__main__":
     args = vars(ap.parse_args())
 
 
-    base_path = os.path.abspath('../Cluster-Reporting-Tool-master') + '/' 
+    base_path = os.path.abspath('../Cluster-Reporting-Tool-master') + '/'
 
     if args["contrast"] != None:
         contrast = args["contrast"]
