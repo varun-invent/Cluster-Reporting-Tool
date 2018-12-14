@@ -82,7 +82,7 @@ class queryAtlas:
                 raise Exception('Exception: Atlas of unknown shape. Exiting!')
 
 
-            print('Atlas read')
+            # print('Atlas read')
             if _atlas.header['pixdim'][1] == 3:
                 pixdim = 3
             elif _atlas.header['pixdim'][1] == 2:
@@ -94,7 +94,7 @@ class queryAtlas:
                 raise Exception('Unknown Pixel Dimension', _atlas.header['pixdim'][1] )
 
             self.pixdim_list.append(pixdim)
-            print('checked Pixel dimension')
+            # print('checked Pixel dimension')
 
 
     @staticmethod
